@@ -1,0 +1,28 @@
+﻿.padding-lg {
+    padding: 5vh 0;
+}
+
+.padding-md {
+    padding: 3vh 0;
+}
+
+.padding-sm {
+    padding: 1vh 0;
+}
+
+.padding-15 {
+    padding 15px 0;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.content-invoice{
+    padding: 5vw 15vw;
+}
+
+#avatar {
+    /*width: 10vh;*/
+    height: 10vh;
+}

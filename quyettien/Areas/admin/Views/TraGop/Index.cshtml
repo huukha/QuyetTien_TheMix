@@ -1,0 +1,115 @@
+﻿@model IEnumerable<quyettien.Models.InstallmentBill>
+
+@{
+    ViewBag.Title = "Quản lý hóa đơn trả góp";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+
+</div>
+<div class="row padding-md">
+    <div class="col-lg-12">
+        <a href="@Url.Action("Them")" class="btn btn-success btn-rounded waves-light waves-effect"><i class="mdi mdi-plus-circle"></i> Thêm hóa đơn</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-box table-responsive">
+            <h4 class="m-t-0 header-title">Danh sách hóa đơn</h4>
+            <table id="installmentbill-table" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Mã hóa đơn</th>
+                        <th>Tên khách hàng</th>
+                        <th>Mã khách hàng</th>
+                        <th>Ngày mua</th>
+                        <th>Tổng tiền</th>
+                        <th>Đưa trước</th>
+                        <th>Còn lại</th>
+                        <th>Hình thức</th>
+                        <th>Thời hạn</th>
+                        <th>Tùy chọn</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @{ int i = 0; }
+                    @foreach (var item in Model)
+                    {
+                        i++;
+                        <tr>
+                            <td>
+                                @i
+                            </td>
+                            <td>
+                                @item.BillCode
+                            </td>
+                            <td>
+                                @item.Customer.CustomerName
+                            </td>
+                            <td>
+                                @item.Customer.CustomerCode
+                            </td>
+                            <td>
+                                @item.Date
+                            </td>
+                            <td>
+                                @item.GrandTotal.ToString("N0")
+                            </td>
+                            <td>
+                                @item.Taken.ToString("N0")
+                            </td>
+                            <td>
+                                @item.Remain.ToString("N0")
+                            </td>
+                            <td>
+                                @item.Method
+                            </td>
+                            <td>
+                                @item.Period
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Xem", new { id=item.ID })" class="btn btn-outline-success btn-rounded waves-light waves-effect btn-sm"><i class="mdi mdi-eye"></i></a>
+                                <a href="@Url.Action("Sua", new { id=item.ID })" class="btn btn-outline-warning btn-rounded waves-light waves-effect btn-sm"><i class="mdi mdi-lead-pencil"></i></a>
+                                <a href="@Url.Action("In", new { id=item.ID })" target="_blank" class="btn btn-outline-primary btn-rounded waves-light waves-effect btn-sm"><i class="mdi mdi-printer"></i></a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section script{
+    <!-- Required datatable js -->
+    <script src="~/Areas/admin/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="~/Areas/admin/assets/plugins/datatables/dataTables.buttons.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/jszip.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/pdfmake.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/vfs_fonts.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/buttons.html5.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/buttons.print.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="~/Areas/admin/assets/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#installmentbill-table").DataTable({
+                "language": {
+                    "url" : "/Areas/admin/assets/plugins/datatables/json/vietnamese.json"
+                },
+                responsive: true
+            });
+        })
+    </script>
+}
+

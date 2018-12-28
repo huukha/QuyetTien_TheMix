@@ -1,0 +1,304 @@
+﻿@model quyettien.Models.CashBill
+
+@{
+    ViewBag.Title = "Thêm hóa đơn tiền mặt";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title float-left">Thêm hóa đơn tiền mặt</h4>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-box">
+            <h4 class="m-t-0 header-title">Thông tin hóa đơn</h4>
+            <div class="row">
+                <div class="col-12">
+                    <div class="p-20">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                                <hr />
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CustomerName, "Tên khách hàng", htmlAttributes: new { @class = "control-label col-md-5" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.PhoneNumber, "Điện thoại", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Address, "Địa chỉ", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Date, "Ngày mua", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @*@Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })*@
+                                        <input type="text" id="Date" name="Date" value="@DateTime.Now.ToShortDateString()" class="form-control" readonly/>
+                                        @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Shipper, "Người giao hàng", htmlAttributes: new { @class = "control-label col-md-5" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Shipper, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Shipper, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Note, "Ghi chú", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group">
+                                    @Html.LabelFor(model => model.GrandTotal, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.GrandTotal, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.GrandTotal, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+                                <div class="form-group">
+                                    <label class="col-md-5">Danh sách sản phẩm</label>
+                                    <div class="col-md-10">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sản phẩm</th>
+                                                    <th>Đơn giá</th>
+                                                    <th>Số lượng</th>
+                                                    <th>Thành tiền</th>
+                                                    <th>Tùy chọn</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="product-list">
+                                                <tr id="1">
+                                                    <td>
+                                                        @Html.DropDownList("ProductID", null, htmlAttributes: new { @class = "form-control dropdown-product" })
+                                                    </td>
+                                                    <td>
+                                                        <span class="price">Đơn giá</span>
+                                                        <input type="hidden" name="SalePrice" class="price-input" />
+                                                    </td>
+
+                                                    <td>
+                                                        <select class="quantity" name="Quantity">
+                                                            @{
+                                                            for (int i = 1; i <= 20; i++)
+                                                            {
+                                                            <option value="@i">@i</option>
+                                                            }
+                                                            }
+                                                        </select>
+                                                    </td>
+                                                    <td class="money"></td>
+                                                    <td>@*<button type="button" class="btn btn-outline-danger btn-rounded btn-sm delete-product"><i class="mdi mdi-close-circle-outline"></i></button>*@</td>
+                                                </tr>
+
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="3"></td>
+                                                    <td colspan="2">
+                                                        <h5 class="text-danger">Tổng: <span id="total"></span></h5>
+                                                        <input type="hidden" id="GrandTotal" name="GrandTotal" />
+                                                    </td>
+                                                    
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        <button type="button" class="btn btn-outline-info waves-effect" id="add-product">Thêm sản phẩm</button>
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <a href="@Url.Action("Index")" class="btn btn-danger waves-light waves-effect btn-rounded"><i class="mdi mdi-close-circle-outline"></i> Hủy</a>
+                                        <button type="submit" class="btn btn-success waves-light waves-effect btn-rounded">Lập hóa đơn</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        var row_id = 2;
+        $("#add-product").click(function () {
+            var row = "";
+            row += "<tr>";
+            row += "<td>Lấy tên</td>";
+            row += "<td>Lấy giá bán</td>";
+            row += "<td>Số lượng</td>";
+            row += "<td>Tính thành tiền</td>";
+            row += "<td><button type='button' class='btn btn-outline-danger btn-rounded btn-sm waves-effect delete-product'><i class='mdi mdi-close-circle-outline'></i></button></td>";
+            row += "</tr>";
+
+            //$("#product-list").append(row);
+
+            addElement("product-list", "tr", row_id, row)
+            row_id++;
+        })
+
+
+
+        $("#product-list").on("click", ".delete-product",function () {
+            var id = $(this).parents("tr").attr("id");
+            var count = $("#product-list tr").length;
+            if (count == 1) {
+                alert("Hóa đơn phải có ít nhất 1 sản phẩm")
+            } else {
+                removeElement(id)
+            }
+        })
+
+        function addElement(parentId, elementTag, elementId, html) {
+            // Thêm dòng
+            var p = document.getElementById(parentId);
+            var newElement = document.createElement(elementTag);
+            newElement.setAttribute('id', elementId);
+            newElement.innerHTML = html;
+            p.appendChild(newElement);
+        }
+
+        function removeElement(elementId) {
+            // Xóa dòng
+            var element = document.getElementById(elementId);
+            element.parentNode.removeChild(element);
+        }
+
+        
+
+        //Ghi giá cho sản phẩm
+        var product_id = $("#ProductID").val();
+        var url = '@Url.Action("SalePrice", "TienMat")';
+        url = url + '/' + product_id;
+        $.get(url, function (data) {
+            $(".price").html(addDot(data));
+            $(".money").html(addDot(data));
+            $(".price-input").val(data);
+
+            // tính tổng tiền
+            TongTien();
+        });
+
+
+        // Xử lý khi thay đổi sản phẩm
+        $('.dropdown-product').change(function () {
+
+
+            // Tìm hàng được thay đổi
+            var price = $(this).parents("tr").find(".price");
+            var money = $(this).parents("tr").find(".money");
+            var quantity = $(this).parents("tr").find(".quantity").val();
+
+            var product_id = $(this).val();
+
+            // thay đổi giá
+            $.ajax({
+                method: "POST",
+                dataType: 'json',
+                url: "@Url.Action("SalePrice", "TienMat")",
+                data: { "id": product_id },
+            }).done(function (data) {
+
+                // hiển thị đơn giá mới
+                price.html(addDot(data))
+
+                // đơn giá ẩn để lưu
+                $(".price-input").val(data);
+
+                // tính thành tiền vs đơn giá mới
+                money.html(addDot(data * quantity))
+
+                // tính tổng tiền
+                TongTien();
+
+            }).fail(function (jqXHR, statusText, errorThrown) {
+                console.log("Fail:" + jqXHR.responseText);
+                console.log(errorThrown);
+            })
+
+        });
+
+        // Tính thành tiền khi đổi số lượng
+        $(".quantity").on("change", function () {
+            var quantity = $(this).val();
+            var money = $(this).parents("tr").find(".money");
+            var price = $(this).parents("tr").find(".price").text();
+            price = convertInt(price);
+            var m = addDot(price * quantity);
+            money.html(m);
+
+            // tính tổng tiền
+            TongTien();
+        })
+
+        // Hàm chuyển STRING thành INT
+        function convertInt(s) {
+            return parseInt(s.replace(/[^0-9]+/g, ''));
+        }
+
+        // Hàm thêm . vào giá
+        function addDot(s) {
+            return new Intl.NumberFormat().format(s)
+        }
+
+
+        function TongTien() {
+            var total = 0;
+            // Tính tổng tiền của hóa đơn
+            $("#product-list tr").each(function () {
+                var money = $(this).find(".money").text();
+
+                money = convertInt(money);
+                total += money;
+
+                // lưu tổng tiền vào input
+                $("#GrandTotal").val(total);
+                // Hiển thị tổng tiền
+                $("#total").html(addDot(total) + " VND")
+            })
+        }
+        
+
+
+        
+    </script>
+}

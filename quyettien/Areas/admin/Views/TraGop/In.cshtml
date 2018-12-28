@@ -1,0 +1,217 @@
+﻿@model quyettien.Models.InstallmentBillModel
+@{
+    Layout = null;
+    if (Session["admin_session"] == null)
+    {
+        Response.Redirect("~/admin/DangNhap");
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@Model.CustomerName - Quyết Tiến</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/Areas/admin/assets/images/favicon.ico">
+
+    <!-- Plugins CSS-->
+    <!-- Select2 -->
+    <link href="~/Areas/admin/assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- DataTables -->
+    <link href="~/Areas/admin/assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Areas/admin/assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <!-- Responsive datatable -->
+    <link href="~/Areas/admin/assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- App css -->
+    <link href="~/Areas/admin/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Areas/admin/assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="~/Areas/admin/assets/css/metismenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Areas/admin/assets/css/style.css" rel="stylesheet" type="text/css" />
+
+    <!-- Custom css -->
+    <link href="~/Areas/admin/assets/css/mycss.css" rel="stylesheet" type="text/css" />
+
+    <script src="~/Areas/admin/assets/js/modernizr.min.js"></script>
+
+</head>
+
+
+<body>
+
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Top Bar Start -->
+        <!-- ============================================================== -->
+        <div class="content-invoice">
+            <!-- Start content -->
+            <div class="content">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <div class="clearfix">
+                                    <div class="pull-left">
+                                        <img src="~/Areas/admin/assets/images/logo_dark.png" alt="" height="80">
+                                    </div>
+                                    <div class="pull-right">
+                                        <h4 class="m-0 d-print-none">Hóa đơn mua hàng trả góp</h4>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="pull-left mt-3">
+                                            <p><b>Thân gửi @Model.CustomerName</b></p>
+                                            <p class="text-muted">
+                                                Điện máy Quyết Tiến xin gửi đến quý khách lời cảm ơn chân thành nhất. Quyết Tiến mong sẽ luôn nhận
+                                                được sự ủng hộ của quý khách. Niềm vui, nụ cười, hạnh phúc 
+                                                của quý khách là động lực để Quyết Tiến cố gắng phát triển hơn nữa
+                                            </p>
+                                        </div>
+
+                                    </div><!-- end col -->
+                                    <div class="col-4 offset-2">
+                                        <div class="mt-3 pull-right">
+                                            <p class="m-b-10"><strong>Thời gian: </strong> @DateTime.Now.ToString("HH:mm - dd/MM/yyyy")</p>
+                                            <p class="m-b-10"><strong>Mã HD: </strong> @Model.BillCode</p>
+                                        </div>
+                                    </div><!-- end col -->
+                                </div>
+                                <!-- end row -->
+
+                                <div class="row mt-3">
+                                    <div class="col-6">
+                                        <h6>Thông tin khách hàng</h6>
+
+                                        <address class="line-h-24">
+                                            Tên: @Model.CustomerName<br>
+                                            Địa chỉ: @Model.Address<br>
+                                            Điện thoại: @Model.Phone
+                                        </address>
+
+                                    </div>
+
+                                    <div class="col-6">
+                                        <h6>Thông tin đơn hàng</h6>
+
+                                        <address class="line-h-24">
+                                            Ngày mua: @Model.Date.ToString("dd/MM/yyyy")<br>
+                                            Tổng tiền: @String.Format("{0:0,0 VND}", Model.GrandTotal)<br>
+                                            Đưa trước: @String.Format("{0:0,0 VND}", Model.Taken)<br>
+                                            Còn lại: @String.Format("{0:0,0 VND}", Model.Remain)<br>
+                                            Thời hạn: @Model.Period @Model.Method
+                                        </address>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table mt-4">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Sản phẩm</th>
+                                                        <th>Số lượng</th>
+                                                        <th>Đơn giá</th>
+                                                        <th>Thành tiền</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{ int i = 0;}
+                                                    @foreach (var item in Model.INSTALLMENTBILL_DETAIL)
+                                                    {
+                                                        i++;
+                                                        <tr>
+                                                            <td>@i</td>
+                                                            <td>@item.Product.ProductName</td>
+                                                            <td>@item.Quantity</td>
+                                                            <td>@String.Format("{0:0,0}", @item.InstallmentPrice)</td>
+                                                            <td>@String.Format("{0:0,0 VND}", @item.InstallmentPrice * item.Quantity)</td>
+                                                        </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="clearfix pt-5">
+                                            <h6 class="text-muted">Notes:</h6>
+
+                                            <small>
+                                                All accounts are to be paid within 7 days from receipt of
+                                                invoice. To be paid by cheque or credit card or direct payment
+                                                online. If account is not paid within 7 days the credits details
+                                                supplied as confirmation of work undertaken will be charged the
+                                                agreed quoted fee noted above.
+                                            </small>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="float-right">
+                                            <p><b>Tổng:</b> @String.Format("{0:0,0 VND}", Model.GrandTotal)</p>
+                                            <p><b>Còn lại:</b> @String.Format("{0:0,0 VND}", Model.Remain)</p>
+                                            <h3>@String.Format("{0:0,0 VND}", Model.Taken)</h3>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+
+                                <div class="hidden-print mt-4 mb-4">
+                                    <div class="text-right">
+                                        <a href="javascript:window.print()" class="btn btn-outline-primary waves-effect waves-light"><i class="fa fa-print m-r-5"></i> In hóa đơn</a>
+                                        <a href="javascript:window.close()" class="btn btn-outline-danger waves-effect waves-light"><i class="fa fa-close"></i> Đóng</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- end row -->
+
+                </div>
+
+            </div> <!-- container -->
+
+            </div> <!-- content -->
+        </div>
+
+
+        <!-- ============================================================== -->
+        <!-- End Right content here -->
+        <!-- ============================================================== -->
+
+
+    </div>
+    <!-- END wrapper -->
+    <!-- jQuery  -->
+    <script src="~/Areas/admin/assets/js/jquery.min.js"></script>
+    <script src="~/Areas/admin/assets/js/popper.min.js"></script>
+    <script src="~/Areas/admin/assets/js/bootstrap.min.js"></script>
+    <script src="~/Areas/admin/assets/js/metisMenu.min.js"></script>
+    <script src="~/Areas/admin/assets/js/waves.js"></script>
+    <script src="~/Areas/admin/assets/js/jquery.slimscroll.js"></script>
+
+    <!-- App js -->
+    <script src="~/Areas/admin/assets/js/jquery.core.js"></script>
+    <script src="~/Areas/admin/assets/js/jquery.app.js"></script>
+
+</body>
+</html>

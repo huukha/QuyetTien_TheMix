@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title float-left">Dashboard</h4>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div class="row padding-md">
+    <div class="col-lg-12">
+        <h4>Chào @Session["fullname"]</h4>
+        <a href="@Url.Action("Index", "DangXuat")" class="btn btn-danger">Đăng xuất</a>
+    </div>
+</div>

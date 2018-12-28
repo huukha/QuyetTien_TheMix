@@ -1,0 +1,69 @@
+﻿@model quyettien.Models.ProductType
+
+@{
+    ViewBag.Title = "Cập nhật danh mục " + Model.ProductTypeName;
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title float-left">Cập nhật danh mục</h4>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-box">
+            <h4 class="m-t-0 header-title">Thông tin danh mục</h4>
+            <div class="row">
+                <div class="col-12">
+                    <div class="p-20">
+
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.ID)
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ProductTypeCode, "Mã danh mục", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ProductTypeCode, new { htmlAttributes = new { @maxlength = "3", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ProductTypeCode, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ProductTypeName, "Tên danh mục", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ProductTypeName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ProductTypeName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+
+                                        <a href="@Url.Action("Index")" class="btn btn-danger waves-light waves-effect btn-rounded"><i class="mdi mdi-close-circle-outline"></i> Hủy</a>
+                                        <button type="submit" class="btn btn-success waves-light waves-effect btn-rounded"><i class="mdi mdi-check-circle-outline"></i>Lưu</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section script {
+    @Scripts.Render("~/bundles/jqueryval")
+}

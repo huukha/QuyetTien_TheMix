@@ -1,0 +1,115 @@
+﻿@model IEnumerable<quyettien.Models.CashBill>
+
+@{
+    ViewBag.Title = "Quản lý hóa đơn tiền mặt";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title float-left">Quản lý hóa đơn tiền mặt</h4>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div class="row padding-md">
+    <div class="col-lg-12">
+        <a href="@Url.Action("Them")" class="btn btn-success btn-rounded waves-light waves-effect"><i class="mdi mdi-plus-circle"></i> Thêm hóa đơn</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-box table-responsive">
+            <h4 class="m-t-0 header-title">Danh sách hóa đơn</h4>
+            <table id="cashbill-table" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Mã hóa đơn</th>
+                        <th>Tên khách hàng</th>
+                        <th>Số điện thoại</th>
+                        <th>Địa chỉ</th>
+                        <th>Ngày</th>
+                        <th>Người giao hàng</th>
+                        <th>Ghi chú</th>
+                        <th>Tổng tiền</th>
+                        <th>Tùy chọn</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{ int i = 0; }
+                    @foreach (var item in Model)
+                    {
+                        i++;
+                        <tr>
+                            <td>
+                                @i
+                            </td>
+                            <td>
+                                @item.BillCode
+                            </td>
+                            <td>
+                                @item.CustomerName
+                            </td>
+                            <td>
+                                @item.PhoneNumber
+                            </td>
+                            <td>
+                                @item.Address
+                            </td>
+                            <td>
+                                @item.Date.ToShortDateString()
+                            </td>
+                            <td>
+                                @item.Shipper
+                            </td>
+                            <td>
+                                @item.Note
+                            </td>
+                            <td>
+                                @item.GrandTotal.ToString("N0")
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Xem", new { id=item.ID })" class="btn btn-outline-success btn-rounded waves-light waves-effect btn-sm"><i class="mdi mdi-eye"></i></a>
+                                <a href="@Url.Action("Sua", new { id=item.ID })" class="btn btn-outline-warning btn-rounded waves-light waves-effect btn-sm"><i class="mdi mdi-lead-pencil"></i></a>
+                                <a href="@Url.Action("In", new { id=item.ID })" target="_blank" class="btn btn-outline-primary btn-rounded waves-light waves-effect btn-sm"><i class="mdi mdi-printer"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section script{
+    <!-- Required datatable js -->
+    <script src="~/Areas/admin/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="~/Areas/admin/assets/plugins/datatables/dataTables.buttons.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/jszip.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/pdfmake.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/vfs_fonts.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/buttons.html5.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/buttons.print.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="~/Areas/admin/assets/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#cashbill-table").DataTable({
+                "language": {
+                    "url" : "/Areas/admin/assets/plugins/datatables/json/vietnamese.json"
+                },
+                responsive: true,
+            });
+        })
+    </script>
+}
