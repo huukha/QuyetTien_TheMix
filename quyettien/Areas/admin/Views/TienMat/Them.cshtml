@@ -57,7 +57,7 @@
                                     @Html.LabelFor(model => model.Date, "Ngày mua", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @*@Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })*@
-                                        <input type="text" id="Date" name="Date" value="@DateTime.Now.ToShortDateString()" class="form-control" readonly/>
+                                        <input type="text" id="Date" name="Date" value="@DateTime.Now.ToShortDateString()" class="form-control" readonly />
                                         @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -79,12 +79,12 @@
                                 </div>
 
                                 @*<div class="form-group">
-                                    @Html.LabelFor(model => model.GrandTotal, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.GrandTotal, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.GrandTotal, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>*@
+                                        @Html.LabelFor(model => model.GrandTotal, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.GrandTotal, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.GrandTotal, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>*@
 
                                 <div class="form-group">
                                     <label class="col-md-5">Danh sách sản phẩm</label>
@@ -131,7 +131,7 @@
                                                         <h5 class="text-danger">Tổng: <span id="total"></span></h5>
                                                         <input type="hidden" id="GrandTotal" name="GrandTotal" />
                                                     </td>
-                                                    
+
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -143,7 +143,7 @@
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-10">
                                         <a href="@Url.Action("Index")" class="btn btn-danger waves-light waves-effect btn-rounded"><i class="mdi mdi-close-circle-outline"></i> Hủy</a>
-                                        <button type="submit" class="btn btn-success waves-light waves-effect btn-rounded"id="save-bill">Lập hóa đơn</button>
+                                        <button type="submit" class="btn btn-success waves-light waves-effect btn-rounded" id="save-bill">Lập hóa đơn</button>
                                     </div>
                                 </div>
                             </div>
@@ -158,268 +158,292 @@
 @section script {
     @Scripts.Render("~/bundles/jqueryval")
 
-<script>
-    var row_id = 2;
-
-    // Thêm sản phẩm
-    $("#add-product").click(function () {
-        var row = '';
-        row += '<tr>';
-        row += '<td>' + dropDownProductList() + '</td>';
-        row += '<td><span class="price"></span><input type="hidden" name="SalePrice" class="price-input"></td>';
-        row += '<td>'+selectQuantity()+'</td>';
-        row += '<td class="money"></td>';
-        row += '<td><button type="button" class="btn btn-outline-danger btn-rounded btn-sm waves-effect delete-product"><i class="mdi mdi-close-circle-outline"></i></button></td>';
-        row += '</tr>';
-
-        addElement("product-list", "tr", row_id, row)
-
-        ghiDonGia(row_id);
-        row_id++;
-    })
-
-    function selectQuantity() {
-        var select = '<select class="form-control quantity" name="Quantity">'
-        for (i = 1; i <= 20; i++) {
-            select += '<option value="' + i + '">' + i + '</option>';
-        }
-        select += '</select>';
-        return select;
-    }
-
-    function dropDownProductList() {
-        var select = '<select class="form-control dropdown-product" id="ProductID">';
-
-        $.ajax({
-            method: "POST",
-            dataType: 'json',
-            url: '@Url.Action("DanhSachSanPham", "TienMat")',
-            async: false,
-        }).done(function (data) {
-            $.each(data.productList, function (i,product) {
-                select += '<option value="' + product.Value + '">' + product.Text + '</option>';
-            })
-
-            select+= '</select>'
-            
-        })
-        return select
-
-    }
+    <!-- Select2 -->
+    <script src="~/Areas/admin/assets/plugins/select2/js/select2.min.js"></script>
 
 
-    // Xử lý xóa sản phẩm
-    $("#product-list").on("click", ".delete-product",function () {
-        var id = $(this).parents("tr").attr("id");
-        var count = $("#product-list tr").length;
-        if (count == 1) {
-            alert("Hóa đơn phải có ít nhất 1 sản phẩm")
-        } else {
-            removeElement(id);
-            TongTien();
-        }
-    })
-
-    function addElement(parentId, elementTag, elementId, html) {
-        // Thêm dòng
-        var p = document.getElementById(parentId);
-        var newElement = document.createElement(elementTag);
-        newElement.setAttribute('id', elementId);
-        newElement.innerHTML = html;
-        p.appendChild(newElement);
-
-    }
-    function removeElement(elementId) {
-        // Xóa dòng
-        var element = document.getElementById(elementId);
-        element.parentNode.removeChild(element);
-    }
+    <script>
 
 
-
-    //Ghi giá cho sản phẩm
-    ghiDonGia(1);
-    function ghiDonGia(id) {
-        var row = $("tr[id^='"+id+"']")
-        var product_id = row.find("#ProductID").val()
-        var url = '@Url.Action("SalePrice", "TienMat")';
-        url = url + '/' + product_id;
-        $.get(url, function (data) {
-            row.find(".price").html(addDot(data));
-            row.find(".money").html(addDot(data));
-            row.find(".price-input").val(data);
-
-            // tính tổng tiền
-            TongTien();
-        });
-    }
-    
-
-    // Xử lý khi thay đổi sản phẩm
-    $(document).on("change", ".dropdown-product", function () {
-
-        // Tìm hàng được thay đổi
-        var price = $(this).parents("tr").find(".price");
-        var price_input = $(this).parents("tr").find(".price-input");
-        var money = $(this).parents("tr").find(".money");
-        var quantity = $(this).parents("tr").find(".quantity").val();
-
-        var product_id = $(this).val();
-
-        // thay đổi giá
-        $.ajax({
-            method: "POST",
-            dataType: 'json',
-            url: "@Url.Action("SalePrice", "TienMat")",
-            data: { "id": product_id },
-        }).done(function (data) {
-
-            // hiển thị đơn giá mới
-            price.html(addDot(data))
-
-            // đơn giá ẩn để lưu
-            price_input.val(data);
-
-            // tính thành tiền vs đơn giá mới
-            money.html(addDot(data * quantity))
-
-            // tính tổng tiền
-            TongTien();
-
-        }).fail(function (jqXHR, statusText, errorThrown) {
-            console.log("Fail:" + jqXHR.responseText);
-            console.log(errorThrown);
-        })
-
-    });
-
-    // Tính thành tiền khi đổi số lượng
-    $(document).on("change", ".quantity", function () {
-        var quantity = $(this).val();
-        var money = $(this).parents("tr").find(".money");
-        var price = $(this).parents("tr").find(".price").text();
-        price = convertInt(price);
-        var m = addDot(price * quantity);
-        money.html(m);
-
-        // tính tổng tiền
-        TongTien();
-    })
-
-    // Hàm chuyển STRING thành INT
-    function convertInt(s) {
-        return parseInt(s.replace(/[^0-9]+/g, ''));
-    }
-
-    // Hàm thêm . vào giá
-    function addDot(s) {
-        return new Intl.NumberFormat().format(s)
-    }
-
-
-    function TongTien() {
-        var total = 0;
-        // Tính tổng tiền của hóa đơn
-        $("#product-list tr").each(function () {
-            var money = $(this).find(".money").text();
-
-            money = convertInt(money);
-            total += money;
-
-            // lưu tổng tiền vào input
-            $("#GrandTotal").val(total);
-            // Hiển thị tổng tiền
-            $("#total").html(addDot(total) + " VND")
-        })
-    }
-
-
-    // xử lý khi nhấn nút lập hóa đơn
-    $("#save-bill").on("click", function (e) {
-
-        e.preventDefault();
-        // Lấy thông tin hóa đơn
-        var cashBill = {};
-        cashBill.CustomerName = $("#CustomerName").val();
-        cashBill.PhoneNumber = $("#PhoneNumber").val();
-        cashBill.Address = $("#Address").val();
-        cashBill.Date = $("#Date").val();
-        cashBill.Shipper = $("#Shipper").val();
-        cashBill.Note = $("#Note").val();
-        cashBill.GrandTotal = $("#GrandTotal").val();
-
-        $.ajax({
-            method: "POST",
-            dataType: "json",
-            url: "@Url.Action("Them", "TienMat")",
-            data: JSON.stringify(cashBill),
-            contentType: "application/json; charset=utf-8",
-        }).done(function (data) {
-            if (data.modelState) {
-                $.each(data.modelState, function (id, message) {
-                    // hiển thị validation
-                    setError(id, message)
-                })
-            } else {
-                //alert(data.billID)
-                // Thực hiện thêm chi tiết hóa đơn
-                themChiTiet(data.billID);
-
-                // Về danh sách hóa đơn
-                window.location = "@Url.Action("Index", "TienMat")"
-            }
-        }).fail(function (jqXHR, statusText, errorThrown) {
-            console.log("Fail:" + jqXHR.responseText);
-            console.log(errorThrown);
-        })
-
-
-        function themChiTiet(id) {
-            //Loop through the Table rows and build a JSON array.
-            var cashBillDetails = new Array();
-            $("#product-list tr").each(function () {
-                var row = $(this);
-                var cbd = {};
-                cbd.BillID = id;
-                cbd.ProductID = row.find(".dropdown-product").val();
-                cbd.Quantity = row.find(".quantity").val();
-                cbd.SalePrice = row.find(".price-input").val();
-                cashBillDetails.push(cbd);
+        $(document).ready(function () {
+            // tìm kiếm sản phẩm
+            $(".dropdown-product").select2({
+                "language": {
+                    "noResults": function () {
+                        return "Không có kết quả phù hợp. Vui lòng vào quản lý sản phẩm để thêm"
+                    }
+                },
             });
+        })
 
-            //console.log(cashBillDetails);
+        var row_id = 2;
+
+        // Thêm sản phẩm
+        $("#add-product").click(function () {
+            var row = '';
+            row += '<tr>';
+            row += '<td>' + dropDownProductList() + '</td>';
+            row += '<td><span class="price"></span><input type="hidden" name="SalePrice" class="price-input"></td>';
+            row += '<td>'+selectQuantity()+'</td>';
+            row += '<td class="money"></td>';
+            row += '<td><button type="button" class="btn btn-outline-danger btn-rounded btn-sm waves-effect delete-product"><i class="mdi mdi-close-circle-outline"></i></button></td>';
+            row += '</tr>';
+
+            addElement("product-list", "tr", row_id, row)
+
+            ghiDonGia(row_id);
+            row_id++;
+
+            // Select2
+            $(".dropdown-product").select2({
+                "language": {
+                    "noResults": function () {
+                        return "Không có kết quả phù hợp. Vui lòng vào quản lý sản phẩm để thêm"
+                    }
+                },
+            });
+        })
+
+        function selectQuantity() {
+            var select = '<select class="form-control quantity" name="Quantity">'
+            for (i = 1; i <= 20; i++) {
+                select += '<option value="' + i + '">' + i + '</option>';
+            }
+            select += '</select>';
+            return select;
+        }
+
+        function dropDownProductList() {
+            var select = '<select class="form-control dropdown-product" id="ProductID">';
 
             $.ajax({
                 method: "POST",
                 dataType: 'json',
-                url: "@Url.Action("ThemChiTiet", "TienMat")",
-                data: JSON.stringify(cashBillDetails),
-                contentType: "application/json; charset=utf-8",
+                url: '@Url.Action("DanhSachSanPham", "TienMat")',
+                async: false,
             }).done(function (data) {
-                //alert("Hóa đơn được thêm thành công");
+                $.each(data.productList, function (i,product) {
+                    select += '<option value="' + product.Value + '">' + product.Text + '</option>';
+                })
+
+                select+= '</select>'
+
+            })
+            return select
+
+        }
+
+
+        // Xử lý xóa sản phẩm
+        $("#product-list").on("click", ".delete-product",function () {
+            var id = $(this).parents("tr").attr("id");
+            var count = $("#product-list tr").length;
+            if (count == 1) {
+                alert("Hóa đơn phải có ít nhất 1 sản phẩm")
+            } else {
+                removeElement(id);
+                TongTien();
+            }
+        })
+
+        function addElement(parentId, elementTag, elementId, html) {
+            // Thêm dòng
+            var p = document.getElementById(parentId);
+            var newElement = document.createElement(elementTag);
+            newElement.setAttribute('id', elementId);
+            newElement.innerHTML = html;
+            p.appendChild(newElement);
+
+        }
+        function removeElement(elementId) {
+            // Xóa dòng
+            var element = document.getElementById(elementId);
+            element.parentNode.removeChild(element);
+        }
+
+
+
+        //Ghi giá cho sản phẩm
+        ghiDonGia(1);
+        function ghiDonGia(id) {
+            var row = $("tr[id^='"+id+"']")
+            var product_id = row.find("#ProductID").val()
+            var url = '@Url.Action("SalePrice", "TienMat")';
+            url = url + '/' + product_id;
+            $.get(url, function (data) {
+                row.find(".price").html(addDot(data));
+                row.find(".money").html(addDot(data));
+                row.find(".price-input").val(data);
+
+                // tính tổng tiền
+                TongTien();
+            });
+        }
+
+
+        // Xử lý khi thay đổi sản phẩm
+        $(document).on("change", ".dropdown-product", function () {
+
+            // Tìm hàng được thay đổi
+            var price = $(this).parents("tr").find(".price");
+            var price_input = $(this).parents("tr").find(".price-input");
+            var money = $(this).parents("tr").find(".money");
+            var quantity = $(this).parents("tr").find(".quantity").val();
+
+            var product_id = $(this).val();
+
+            // thay đổi giá
+            $.ajax({
+                method: "POST",
+                dataType: 'json',
+                url: "@Url.Action("SalePrice", "TienMat")",
+                data: { "id": product_id },
+            }).done(function (data) {
+
+                // hiển thị đơn giá mới
+                price.html(addDot(data))
+
+                // đơn giá ẩn để lưu
+                price_input.val(data);
+
+                // tính thành tiền vs đơn giá mới
+                money.html(addDot(data * quantity))
+
+                // tính tổng tiền
+                TongTien();
 
             }).fail(function (jqXHR, statusText, errorThrown) {
-                //console.log("Fail:" + jqXHR.responseText);
-                //console.log(errorThrown);
+                console.log("Fail:" + jqXHR.responseText);
+                console.log(errorThrown);
+            })
+
+        });
+
+        // Tính thành tiền khi đổi số lượng
+        $(document).on("change", ".quantity", function () {
+            var quantity = $(this).val();
+            var money = $(this).parents("tr").find(".money");
+            var price = $(this).parents("tr").find(".price").text();
+            price = convertInt(price);
+            var m = addDot(price * quantity);
+            money.html(m);
+
+            // tính tổng tiền
+            TongTien();
+        })
+
+        // Hàm chuyển STRING thành INT
+        function convertInt(s) {
+            return parseInt(s.replace(/[^0-9]+/g, ''));
+        }
+
+        // Hàm thêm . vào giá
+        function addDot(s) {
+            return new Intl.NumberFormat().format(s)
+        }
+
+
+        function TongTien() {
+            var total = 0;
+            // Tính tổng tiền của hóa đơn
+            $("#product-list tr").each(function () {
+                var money = $(this).find(".money").text();
+
+                money = convertInt(money);
+                total += money;
+
+                // lưu tổng tiền vào input
+                $("#GrandTotal").val(total);
+                // Hiển thị tổng tiền
+                $("#total").html(addDot(total) + " VND")
             })
         }
 
-        // hàm hiển thị validation
-        function setError(id, message) {
-            var span = $("span[data-valmsg-for=\"" + id + "\"]");
-            if (span && span.length > 0) {
-                $(span).html(message);
-                if (message && message != "") {
-                    $(span).removeClass("field-validation-valid");
-                    $(span).addClass("field-validation-no-valid");
+
+        // xử lý khi nhấn nút lập hóa đơn
+        $("#save-bill").on("click", function (e) {
+
+            e.preventDefault();
+            // Lấy thông tin hóa đơn
+            var cashBill = {};
+            cashBill.CustomerName = $("#CustomerName").val();
+            cashBill.PhoneNumber = $("#PhoneNumber").val();
+            cashBill.Address = $("#Address").val();
+            cashBill.Date = $("#Date").val();
+            cashBill.Shipper = $("#Shipper").val();
+            cashBill.Note = $("#Note").val();
+            cashBill.GrandTotal = $("#GrandTotal").val();
+
+            $.ajax({
+                method: "POST",
+                dataType: "json",
+                url: "@Url.Action("Them", "TienMat")",
+                data: JSON.stringify(cashBill),
+                contentType: "application/json; charset=utf-8",
+            }).done(function (data) {
+                if (data.modelState) {
+                    $.each(data.modelState, function (id, message) {
+                        // hiển thị validation
+                        setError(id, message)
+                    })
                 } else {
-                    $(span).removeClass("field-validation-no-valid");
-                    $(span).addClass("field-validation-valid");
+                    //alert(data.billID)
+                    // Thực hiện thêm chi tiết hóa đơn
+                    themChiTiet(data.billID);
+
+                    // Về danh sách hóa đơn
+                    window.location = "@Url.Action("Index", "TienMat")"
+                }
+            }).fail(function (jqXHR, statusText, errorThrown) {
+                console.log("Fail:" + jqXHR.responseText);
+                console.log(errorThrown);
+            })
+
+
+            function themChiTiet(id) {
+                //Loop through the Table rows and build a JSON array.
+                var cashBillDetails = new Array();
+                $("#product-list tr").each(function () {
+                    var row = $(this);
+                    var cbd = {};
+                    cbd.BillID = id;
+                    cbd.ProductID = row.find(".dropdown-product").val();
+                    cbd.Quantity = row.find(".quantity").val();
+                    cbd.SalePrice = row.find(".price-input").val();
+                    cashBillDetails.push(cbd);
+                });
+
+                //console.log(cashBillDetails);
+
+                $.ajax({
+                    method: "POST",
+                    dataType: 'json',
+                    url: "@Url.Action("ThemChiTiet", "TienMat")",
+                    data: JSON.stringify(cashBillDetails),
+                    contentType: "application/json; charset=utf-8",
+                }).done(function (data) {
+                    //alert("Hóa đơn được thêm thành công");
+
+                }).fail(function (jqXHR, statusText, errorThrown) {
+                    //console.log("Fail:" + jqXHR.responseText);
+                    //console.log(errorThrown);
+                })
+            }
+
+            // hàm hiển thị validation
+            function setError(id, message) {
+                var span = $("span[data-valmsg-for=\"" + id + "\"]");
+                if (span && span.length > 0) {
+                    $(span).html(message);
+                    if (message && message != "") {
+                        $(span).removeClass("field-validation-valid");
+                        $(span).addClass("field-validation-no-valid");
+                    } else {
+                        $(span).removeClass("field-validation-no-valid");
+                        $(span).addClass("field-validation-valid");
+                    }
                 }
             }
-        }
-
-        
-    });
-</script>
+        });
+    </script>
 }
