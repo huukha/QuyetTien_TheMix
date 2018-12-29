@@ -160,6 +160,8 @@
 
 <script>
     var row_id = 2;
+
+    // Thêm sản phẩm
     $("#add-product").click(function () {
         var row = '';
         row += '<tr>';
@@ -171,6 +173,8 @@
         row += '</tr>';
 
         addElement("product-list", "tr", row_id, row)
+
+        ghiDonGia(row_id);
         row_id++;
     })
 
@@ -223,7 +227,6 @@
         newElement.setAttribute('id', elementId);
         newElement.innerHTML = html;
         p.appendChild(newElement);
-        ghiDonGia();
 
     }
     function removeElement(elementId) {
@@ -235,15 +238,16 @@
 
 
     //Ghi giá cho sản phẩm
-    ghiDonGia();
-    function ghiDonGia() {
-        var product_id = $("#ProductID").val();
+    ghiDonGia(1);
+    function ghiDonGia(id) {
+        var row = $("tr[id^='"+id+"']")
+        var product_id = row.find("#ProductID").val()
         var url = '@Url.Action("SalePrice", "TienMat")';
         url = url + '/' + product_id;
         $.get(url, function (data) {
-            $(".price").html(addDot(data));
-            $(".money").html(addDot(data));
-            $(".price-input").val(data);
+            row.find(".price").html(addDot(data));
+            row.find(".money").html(addDot(data));
+            row.find(".price-input").val(data);
 
             // tính tổng tiền
             TongTien();
