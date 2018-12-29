@@ -76,6 +76,8 @@ namespace quyettien.Areas.admin.Controllers
 
         public JsonResult ThemChiTiet(List<CashBillDetail> cashBillDetails)
         {
+            int billID = cashBillDetails[0].BillID;
+            db.CashBillDetails.RemoveRange(db.CashBillDetails.Where(cbd => cbd.BillID == billID));
             foreach (CashBillDetail cbd in cashBillDetails)
             {
                 db.CashBillDetails.Add(cbd);
@@ -118,16 +120,46 @@ namespace quyettien.Areas.admin.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Sua([Bind(Include = "ID,BillCode,CustomerName,PhoneNumber,Address,Date,Shipper,Note,GrandTotal")] CashBill cashBill)
+        //[ValidateAntiForgeryToken]
+        public JsonResult Sua([Bind(Include = "ID,BillCode,CustomerName,PhoneNumber,Address,Date,Shipper,Note,GrandTotal")] CashBill cashBill)
         {
+            
             if (ModelState.IsValid)
             {
-                db.Entry(cashBill).State = EntityState.Modified;
+                db.CashBills.Attach(cashBill);
+                db.Entry(cashBill).Property(cb => cb.CustomerName).IsModified = true;
+                db.Entry(cashBill).Property(cb => cb.PhoneNumber).IsModified = true;
+                db.Entry(cashBill).Property(cb => cb.Address).IsModified = true;
+                db.Entry(cashBill).Property(cb => cb.Shipper).IsModified = true;
+                db.Entry(cashBill).Property(cb => cb.Note).IsModified = true;
+                db.Entry(cashBill).Property(cb => cb.GrandTotal).IsModified = true;
+
+                //db.Entry(cashBill).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                //return Json("Cập nhật thành công");
+
+                int BillID = cashBill.ID;
+                return Json(new { billID = BillID }, JsonRequestBehavior.AllowGet);
             }
-            return View(cashBill);
+            else
+            {
+                var modelState = ModelState.ToDictionary
+                (
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+
+                );
+                return Json(new { modelState = modelState }, JsonRequestBehavior.AllowGet);
+            }
+            //return View(cashBill);
+        }
+
+        public JsonResult ChiTietHoaDon(int id)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var list = db.CashBillDetails.Where(cbd=> cbd.BillID == id).ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         //// GET: admin/TienMat/Xoa/5
