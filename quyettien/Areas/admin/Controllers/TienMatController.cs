@@ -46,28 +46,57 @@ namespace quyettien.Areas.admin.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Them([Bind(Include = "ID,BillCode,CustomerName,PhoneNumber,Address,Date,Shipper,Note,GrandTotal")] CashBill cashBill, CashBillDetail cashBillDetail)
+        //[ValidateAntiForgeryToken]
+        public JsonResult Them([Bind(Include = "ID,BillCode,CustomerName,PhoneNumber,Address,Date,Shipper,Note,GrandTotal")] CashBill cashBill)
         {
             if (ModelState.IsValid)
             {
                 cashBill.Date = DateTime.Now;
                 db.CashBills.Add(cashBill);
-                db.CashBillDetails.Add(cashBillDetail);
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            ViewBag.ProductID = new SelectList(db.Products, "ID", "ProductName", cashBillDetail.ProductID);
-            return View(cashBill);
+                //return Json("Thêm thành công");
+
+
+                int BillID = db.CashBills.Max(b => b.ID);
+                return Json(new { billID = BillID}, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var modelState = ModelState.ToDictionary
+                (
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+
+                );
+                return Json(new { modelState = modelState }, JsonRequestBehavior.AllowGet);
+            }
         }
+
+
+        public JsonResult ThemChiTiet(List<CashBillDetail> cashBillDetails)
+        {
+            foreach (CashBillDetail cbd in cashBillDetails)
+            {
+                db.CashBillDetails.Add(cbd);
+            }
+            db.SaveChanges();
+            return Json(true);
+        }
+
 
         // GET: SalePrice
         public int SalePrice(int id)
         {
             var price = db.Products.Find(id).SalePrice;
             return price;
-            //return Json(price, JsonRequestBehavior.AllowGet);
+        }
+
+        // GET: DanhSachSanPham
+        public JsonResult DanhSachSanPham()
+        {
+            var ProductList = new SelectList(db.Products, "ID", "ProductName");
+            return Json(new { productList = ProductList }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: admin/TienMat/Sua/5

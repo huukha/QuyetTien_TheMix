@@ -25,12 +25,17 @@ namespace quyettien.Models
         public string BillCode { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập tên khách hàng")]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Họ tên từ 5 đến 50 kí tự")]
         public string CustomerName { get; set; }
 
 
+        [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
+        [StringLength(10, MinimumLength = 10, ErrorMessage = "Điện thoại là 10 kí tự số bắt đầu bằng số 0")]
+        [RegularExpression(@"^[0][0-9]{9}$", ErrorMessage = "Điện thoại là 10 kí tự số bắt đầu bằng số 0")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập địa chỉ")]
+        [StringLength(100, MinimumLength = 5, ErrorMessage = "Địa chỉ từ 5 đến 100 kí tự")]
         public string Address { get; set; }
 
         [DataType(DataType.Date)]
