@@ -1,91 +1,183 @@
 ﻿@model quyettien.Models.Product
 
 @{
-    ViewBag.Title = "Sản phẩm";
+    ViewBag.Title = Model.ProductName + " - Điện Máy Quyết Tiến";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<!-- breadcrumb -->
+	@*<div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
+		<a href="index.html" class="s-text16">
+			Trang chủ
+			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
+		</a>
 
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductCode)
-        </dt>
+		<a href="product.html" class="s-text16">
+			TV
+			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
+		</a>
 
-        <dd>
-            @Html.DisplayFor(model => model.ProductCode)
-        </dd>
+		<a href="#" class="s-text16">
+			Smart TV
+			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
+		</a>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
+		<span class="s-text17">
+			Smart Tivi Darling HD 32 inch 32HD959
+		</span>
+	</div>*@
 
-        <dd>
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
+	<!-- Product Detail -->
+	<!-- Product Detail -->
+	<div class="container bgwhite p-t-35 p-b-80">
+		<div class="flex-w flex-sb">
+			<div class="w-size13 p-t-30 respon5">
+				<div class="wrap-slick3 flex-sb flex-w">
+					<div class="slick3">
+						<div class="item-slick3">
+							<div class="wrap-pic-w">
+								<img src="@Url.Action("GetImage", new { id = Model.ID })" alt="@Model.ProductName" style="width: 400px; height: 720px;">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SalePrice)
-        </dt>
+			<div class="w-size14 p-t-30 respon5">
+				<h4 class="product-detail-name m-text16 p-b-13">
+					@Model.ProductName
+				</h4>
 
-        <dd>
-            @Html.DisplayFor(model => model.SalePrice)
-        </dd>
+				<span class="m-text17">
+					@Model.SalePrice.ToString("N0") ₫
+				</span>
+				<p class="s-text8 p-t-10"></p>
+				<div class="p-b-45">
+					
+				</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OriginPrice)
-        </dt>
+				<!--  -->
+				<div class="wrap-dropdown-content bo6 p-t-15 p-b-14 active-dropdown-content">
+					<h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
+						Mô tả
+						<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
+						<i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>
+					</h5>
 
-        <dd>
-            @Html.DisplayFor(model => model.OriginPrice)
-        </dd>
+					<div class="dropdown-content dis-none p-t-15 p-b-23">
+						<p class="s-text8">
+							@Model.Description
+						</p>
+					</div>
+				</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.InstallmentPrice)
-        </dt>
+				<div class="wrap-dropdown-content bo7 p-t-15 p-b-14">
+					<h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
+						Thông tin bổ sung
+						<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
+						<i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>
 
-        <dd>
-            @Html.DisplayFor(model => model.InstallmentPrice)
-        </dd>
+					</h5>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
+					<div class="dropdown-content dis-none p-t-15 p-b-23">
+						<p class="s-text8">
+							Mã sản phẩm: @Model.ProductCode
+						</p>
+						<p class="s-text8">
+							Danh mục: @Model.ProductType.ProductTypeName
+						</p>
+                        <p class="s-text8">
+                            Giá góp: @Model.InstallmentPrice.ToString("N0") ₫
+                        </p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Avatar)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Avatar)
-        </dd>
+	<!-- Relate Product -->
+	<section class="relateproduct bgwhite p-t-45 p-b-138">
+		<div class="container">
+			<div class="sec-title p-b-60">
+				<h3 class="m-text5 t-center">
+					Các sản phẩm liên quan
+				</h3>
+			</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
+			<!-- Slide2 -->
+			<div class="wrap-slick2">
+				<div class="slick2">
 
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
+					<div class="item-slick2 p-l-15 p-r-15">
+						<!-- Block2 -->
+						<div class="block2">
+							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+								<img src="images/item-02.jpg" alt="IMG-PRODUCT">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductType.ProductTypeCode)
-        </dt>
+								<div class="block2-overlay trans-0-4">
+									<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
+										<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
+										<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
+									</a>
 
-        <dd>
-            @Html.DisplayFor(model => model.ProductType.ProductTypeCode)
-        </dd>
+									<div class="block2-btn-addcart w-size1 trans-0-4">
+										<!-- Button -->
+										<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+											Add to Cart
+										</button>
+									</div>
+								</div>
+							</div>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+							<div class="block2-txt p-t-20">
+								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+									Herschel supply co 25l
+								</a>
+
+								<span class="block2-price m-text6 p-r-5">
+									$75.00
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="item-slick2 p-l-15 p-r-15">
+						<!-- Block2 -->
+						<div class="block2">
+							<div class="block2-img wrap-pic-w of-hidden pos-relative">
+								<img src="images/item-03.jpg" alt="IMG-PRODUCT">
+
+								<div class="block2-overlay trans-0-4">
+									<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
+										<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
+										<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
+									</a>
+
+									<div class="block2-btn-addcart w-size1 trans-0-4">
+										<!-- Button -->
+										<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+											Add to Cart
+										</button>
+									</div>
+								</div>
+							</div>
+
+							<div class="block2-txt p-t-20">
+								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+									Denim jacket blue
+								</a>
+
+								<span class="block2-price m-text6 p-r-5">
+									$92.50
+								</span>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+
+		</div>
+	</section>
