@@ -6,26 +6,21 @@
 }
 
 <!-- breadcrumb -->
-	@*<div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
-		<a href="index.html" class="s-text16">
+	<div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
+		<a href="@Url.Action("Index","Home")" class="s-text16">
 			Trang chủ
 			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
 		</a>
 
-		<a href="product.html" class="s-text16">
-			TV
-			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
-		</a>
-
-		<a href="#" class="s-text16">
-			Smart TV
+		<a href="@Url.Action("Index","San_Pham")" class="s-text16">
+			Sản phẩm
 			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
 		</a>
 
 		<span class="s-text17">
-			Smart Tivi Darling HD 32 inch 32HD959
+			@Model.ProductName
 		</span>
-	</div>*@
+	</div>
 
 	<!-- Product Detail -->
 	<!-- Product Detail -->

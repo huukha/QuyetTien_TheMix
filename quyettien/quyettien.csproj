@@ -165,6 +165,7 @@
     <Compile Include="Areas\admin\Controllers\SanPhamController.cs" />
     <Compile Include="Areas\admin\Controllers\TienMatController.cs" />
     <Compile Include="Areas\admin\Controllers\TraGopController.cs" />
+    <Compile Include="Controllers\Gioi_ThieuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\San_PhamController.cs" />
     <Compile Include="Global.asax.cs">
@@ -3762,6 +3763,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\San_Pham\Chi_Tiet.cshtml" />
     <Content Include="Views\San_Pham\Index.cshtml" />
+    <Content Include="Views\Gioi_Thieu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
