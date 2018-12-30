@@ -21,7 +21,7 @@ namespace quyettien.Models
             this.CashBillDetails = new HashSet<CashBillDetail>();
             this.InstallmentBillDetails = new HashSet<InstallmentBillDetail>();
         }
-    
+
         public int ID { get; set; }
         public string ProductCode { get; set; }
 
@@ -49,6 +49,10 @@ namespace quyettien.Models
 
         public string Avatar { get; set; }
         public Nullable<bool> Status { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng nhập mô tả")]
+        [MinLength(5, ErrorMessage = "Mô tả không được ít hơn 10 kí tự")]
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CashBillDetail> CashBillDetails { get; set; }

@@ -20,7 +20,7 @@ namespace quyettien.Models
         {
             this.InstallmentBills = new HashSet<InstallmentBill>();
         }
-        
+
         public int ID { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập số CMND")]
@@ -43,7 +43,7 @@ namespace quyettien.Models
         [Required(ErrorMessage = "Vui lòng nhập năm sinh")]
         [RegularExpression(@"^[0-9]{4}$", ErrorMessage = "Năm sinh là số")]
         public Nullable<int> YearOfBirth { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InstallmentBill> InstallmentBills { get; set; }
     }

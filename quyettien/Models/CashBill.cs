@@ -20,7 +20,7 @@ namespace quyettien.Models
         {
             this.CashBillDetails = new HashSet<CashBillDetail>();
         }
-    
+
         public int ID { get; set; }
         public string BillCode { get; set; }
 
@@ -42,9 +42,9 @@ namespace quyettien.Models
         public System.DateTime Date { get; set; }
         public string Shipper { get; set; }
         public string Note { get; set; }
-        
+
         public int GrandTotal { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CashBillDetail> CashBillDetails { get; set; }
     }

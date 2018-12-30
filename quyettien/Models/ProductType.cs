@@ -20,7 +20,7 @@ namespace quyettien.Models
         {
             this.Products = new HashSet<Product>();
         }
-    
+
         public int ID { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập mã danh mục")]
@@ -31,7 +31,7 @@ namespace quyettien.Models
         [Required(ErrorMessage = "Vui lòng nhập tên danh mục")]
         [StringLength(100, MinimumLength = 5, ErrorMessage = "Tên danh mục từ 5 đến 100 kí tự")]
         public string ProductTypeName { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
     }

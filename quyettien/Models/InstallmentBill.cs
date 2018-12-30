@@ -20,7 +20,7 @@ namespace quyettien.Models
         {
             this.InstallmentBillDetails = new HashSet<InstallmentBillDetail>();
         }
-    
+
         public int ID { get; set; }
         public string BillCode { get; set; }
         public int CustomerID { get; set; }
@@ -42,7 +42,7 @@ namespace quyettien.Models
         public int Taken { get; set; }
 
         public int Remain { get; set; }
-    
+
         public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InstallmentBillDetail> InstallmentBillDetails { get; set; }
