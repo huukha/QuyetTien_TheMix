@@ -157,7 +157,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\admin\adminAreaRegistration.cs" />
-    <Compile Include="Areas\admin\Controllers\ChiTietHoaDonController.cs" />
     <Compile Include="Areas\admin\Controllers\DangNhapController.cs" />
     <Compile Include="Areas\admin\Controllers\DangXuatController.cs" />
     <Compile Include="Areas\admin\Controllers\DanhMucController.cs" />
@@ -167,6 +166,7 @@
     <Compile Include="Areas\admin\Controllers\TienMatController.cs" />
     <Compile Include="Areas\admin\Controllers\TraGopController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\San_PhamController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3760,12 +3760,13 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\San_Pham\Chi_Tiet.cshtml" />
+    <Content Include="Views\San_Pham\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\admin\assets\plugins\jquery.filer\uploads\" />
     <Folder Include="Areas\admin\Models\" />
-    <Folder Include="Areas\admin\Views\ChiTietHoaDon\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
