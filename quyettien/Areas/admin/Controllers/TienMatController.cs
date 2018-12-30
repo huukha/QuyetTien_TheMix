@@ -38,7 +38,7 @@ namespace quyettien.Areas.admin.Controllers
         // GET: admin/TienMat/Them
         public ActionResult Them()
         {
-            ViewBag.ProductID = new SelectList(db.Products, "ID", "ProductName");
+            ViewBag.ProductID = new SelectList(db.Products.Where(p => p.Status == true), "ID", "ProductName");
             return View();
         }
 
@@ -56,7 +56,6 @@ namespace quyettien.Areas.admin.Controllers
                 db.SaveChanges();
 
                 //return Json("Thêm thành công");
-
 
                 int BillID = db.CashBills.Max(b => b.ID);
                 return Json(new { billID = BillID}, JsonRequestBehavior.AllowGet);
@@ -97,7 +96,7 @@ namespace quyettien.Areas.admin.Controllers
         // GET: DanhSachSanPham
         public JsonResult DanhSachSanPham()
         {
-            var ProductList = new SelectList(db.Products, "ID", "ProductName");
+            var ProductList = new SelectList(db.Products.Where(p => p.Status == true), "ID", "ProductName");
             return Json(new { productList = ProductList }, JsonRequestBehavior.AllowGet);
         }
 

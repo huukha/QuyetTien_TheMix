@@ -76,7 +76,16 @@
                                 @item.Quantity
                             </td>
                             <td>
-                                @item.Status
+                                @{
+                                    if (item.Status == true)
+                                    {
+                                        <span>Hiển thị</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Ẩn</span>
+                                    }
+                                }
                             </td>
                             <td>
                                 <a href="@Url.Action("Xem", new { id=item.ID })" class="btn btn-outline-success btn-rounded waves-light waves-effect btn-sm"><i class="mdi mdi-eye"></i></a>

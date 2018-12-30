@@ -40,6 +40,7 @@ namespace quyettien.Areas.admin.Controllers
         public ActionResult Them()
         {
             ViewBag.CustomerID = new SelectList(db.Customers, "ID", "CustomerName");
+            ViewBag.ProductID = new SelectList(db.Products.Where(p => p.Status == true), "ID", "ProductName");
             return View();
         }
 
@@ -47,18 +48,55 @@ namespace quyettien.Areas.admin.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Them([Bind(Include = "ID,BillCode,CustomerID,Date,Shipper,Note,Method,Period,GrandTotal,Taken,Remain")] InstallmentBill installmentBill)
+        //[ValidateAntiForgeryToken]
+        public JsonResult Them([Bind(Include = "ID,BillCode,CustomerID,Date,Shipper,Note,Method,Period,GrandTotal,Taken,Remain")] InstallmentBill installmentBill)
         {
             if (ModelState.IsValid)
             {
+                installmentBill.Date = DateTime.Now;
                 db.InstallmentBills.Add(installmentBill);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                int BillID = db.InstallmentBills.Max(b => b.ID);
+                return Json(new { billID = BillID }, JsonRequestBehavior.AllowGet);
             }
+            else
+            {
+                var modelState = ModelState.ToDictionary
+                (
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
 
-            ViewBag.CustomerID = new SelectList(db.Customers, "ID", "CustomerName", installmentBill.CustomerID);
-            return View(installmentBill);
+                );
+                return Json(new { modelState = modelState }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        public JsonResult ThemChiTiet(List<InstallmentBillDetail> installmentBillDetails)
+        {
+            int billID = installmentBillDetails[0].BillID;
+            db.CashBillDetails.RemoveRange(db.CashBillDetails.Where(cbd => cbd.BillID == billID));
+            foreach (InstallmentBillDetail ibd in installmentBillDetails)
+            {
+                db.InstallmentBillDetails.Add(ibd);
+            }
+            db.SaveChanges();
+            return Json(true);
+        }
+
+        // GET: InstallmentPrice
+        public int InstallmentPrice(int id)
+        {
+            var price = db.Products.Find(id).InstallmentPrice;
+            return price;
+        }
+
+        // GET: DanhSachSanPham
+        public JsonResult DanhSachSanPham()
+        {
+            var ProductList = new SelectList(db.Products.Where(p => p.Status == true), "ID", "ProductName");
+            return Json(new { productList = ProductList }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: admin/TraGop/Sua/5

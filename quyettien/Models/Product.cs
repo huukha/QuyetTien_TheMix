@@ -32,18 +32,19 @@ namespace quyettien.Models
         public int ProductTypeID { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập giá bán")]
-        [Range(0, 2147483647, ErrorMessage = "Giá bán trong khoảng từ 0 đến 2147483647")]
+        [Range(0, 2000000000, ErrorMessage = "Giá bán trong khoảng từ 0 đến 2.000.000.000")]
         public int SalePrice { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập giá gốc")]
-        [Range(0, 2147483647, ErrorMessage = "Giá gốc trong khoảng từ 0 đến 2147483647")]
+        [Range(0, 2000000000, ErrorMessage = "Giá gốc trong khoảng từ 0 đến 2.000.000.000")]
         public int OriginPrice { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập giá góp")]
-        [Range(0, 2147483647, ErrorMessage = "Giá góp trong khoảng từ 0 đến 2147483647")]
+        [Range(0, 2000000000, ErrorMessage = "Giá góp trong khoảng từ 0 đến 2.000.000.000")]
         public int InstallmentPrice { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập số lượng")]
+        [Range(0, 100000, ErrorMessage = "Số lượng trong khoảng từ 0 đến 100000")]
         public int Quantity { get; set; }
 
         public string Avatar { get; set; }
