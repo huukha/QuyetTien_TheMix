@@ -109,7 +109,7 @@ namespace quyettien.Areas.admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Sua([Bind(Include = "ID,ProductCode,ProductName,ProductTypeID,SalePrice,OriginPrice,InstallmentPrice,Quantity,Avatar,Status")] Product product)
+        public ActionResult Sua([Bind(Include = "ID,ProductCode,ProductName,ProductTypeID,SalePrice,OriginPrice,InstallmentPrice,Quantity,Avatar,Status,Description")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -140,7 +140,7 @@ namespace quyettien.Areas.admin.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            ViewBag.ProductTypeID = new SelectList(db.ProductTypes, "ID", "ProductTypenName", product.ProductTypeID);
+            ViewBag.ProductTypeID = new SelectList(db.ProductTypes, "ID", "ProductTypeName", product.ProductTypeID);
             return View(product);
         }
 

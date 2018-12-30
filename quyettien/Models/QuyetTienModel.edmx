@@ -88,7 +88,7 @@
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Avatar" Type="varchar" MaxLength="50" />
           <Property Name="Status" Type="bit" />
-          <Property Name="Description" Type="text" />
+          <Property Name="Description" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -294,7 +294,7 @@
           <NavigationProperty Name="CashBillDetails" Relationship="Self.FK_CashBillDetail_Product" FromRole="Product" ToRole="CashBillDetail" />
           <NavigationProperty Name="InstallmentBillDetails" Relationship="Self.FK_InstallmentBillDetail_Product" FromRole="Product" ToRole="InstallmentBillDetail" />
           <NavigationProperty Name="ProductType" Relationship="Self.FK_Product_ProductType" FromRole="Product" ToRole="ProductType" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>

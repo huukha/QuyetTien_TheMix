@@ -51,9 +51,10 @@ namespace quyettien.Models
         public Nullable<bool> Status { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập mô tả")]
-        [MinLength(5, ErrorMessage = "Mô tả không được ít hơn 10 kí tự")]
+        [MinLength(10, ErrorMessage = "Mô tả không được ít hơn 10 kí tự")]
+        [MaxLength(200, ErrorMessage = "Mô tả không được nhiều hơn 2000 kí tự")]
         public string Description { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CashBillDetail> CashBillDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

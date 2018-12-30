@@ -17,7 +17,7 @@ namespace quyettien.Controllers
         // GET: San_Pham
         public ActionResult Index()
         {
-            var products = db.Products.Include(p => p.ProductType);
+            var products = db.Products.Include(p => p.ProductType).Where(p => p.Status == true);
 
             ViewBag.ProductTypeID = new SelectList(db.ProductTypes, "ID", "ProductTypeName");
             return View(products.ToList());
