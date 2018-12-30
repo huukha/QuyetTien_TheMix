@@ -66,7 +66,7 @@
 
                 <ul class="list-unstyled topbar-right-menu float-right mb-0">
                     <li class="dropdown notification-list hide-phone">
-                        <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
+                        @*<a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
                            aria-haspopup="false" aria-expanded="false">
                             <i class="mdi mdi-earth"></i> English  <i class="mdi mdi-chevron-down"></i>
                         </a>
@@ -92,11 +92,11 @@
                                 Tiếng Việt
                             </a>
 
-                        </div>
+                        </div>*@
                     </li>
 
                     <li class="dropdown notification-list">
-                        <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown" href="#" role="button"
+                        @*<a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown" href="#" role="button"
                            aria-haspopup="false" aria-expanded="false">
                             <i class="fi-bell noti-icon"></i>
                             <span class="badge badge-danger badge-pill noti-icon-badge">4</span>
@@ -151,11 +151,11 @@
                                 View all <i class="fi-arrow-right"></i>
                             </a>
 
-                        </div>
+                        </div>*@
                     </li>
 
                     <li class="dropdown notification-list">
-                        <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown" href="#" role="button"
+                        @*<a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown" href="#" role="button"
                            aria-haspopup="false" aria-expanded="false">
                             <i class="fi-speech-bubble noti-icon"></i>
                             <span class="badge badge-light badge-pill noti-icon-badge">6</span>
@@ -209,7 +209,7 @@
                                 View all <i class="fi-arrow-right"></i>
                             </a>
 
-                        </div>
+                        </div>*@
                     </li>
 
                     <li class="dropdown notification-list">
@@ -220,32 +220,16 @@
                         <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                             <!-- item-->
                             <div class="dropdown-item noti-title">
-                                <h6 class="text-overflow m-0">Welcome !</h6>
+                                <h6 class="text-overflow m-0">Chào @Session["fullname"] !</h6>
                             </div>
 
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="fi-head"></i> <span>My Account</span>
+                                <i class="fi-cog"></i> <span>Đổi mật khẩu</span>
                             </a>
-
                             <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="fi-cog"></i> <span>Settings</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="fi-help"></i> <span>Support</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="fi-lock"></i> <span>Lock Screen</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="fi-power"></i> <span>Logout</span>
+                            <a href="@Url.Action("Index","DangXuat")" class="dropdown-item notify-item">
+                                <i class="fi-power"></i> <span>Đăng xuất</span>
                             </a>
 
                         </div>
@@ -357,6 +341,10 @@
     <script src="~/Areas/admin/assets/js/metisMenu.min.js"></script>
     <script src="~/Areas/admin/assets/js/waves.js"></script>
     <script src="~/Areas/admin/assets/js/jquery.slimscroll.js"></script>
+
+    <!-- Plugins-->
+    <script src="~/Areas/admin/assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
+    <script src="~/Areas/admin/assets/plugins/counterup/jquery.counterup.min.js"></script>
 
     <!-- App js -->
     <script src="~/Areas/admin/assets/js/jquery.core.js"></script>
