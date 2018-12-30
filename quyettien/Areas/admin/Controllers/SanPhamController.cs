@@ -58,7 +58,7 @@ namespace quyettien.Areas.admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Them([Bind(Include = "ID,ProductCode,ProductName,ProductTypeID,SalePrice,OriginPrice,InstallmentPrice,Quantity,Avatar,Status")] Product product)
+        public ActionResult Them([Bind(Include = "ID,ProductCode,ProductName,ProductTypeID,SalePrice,OriginPrice,InstallmentPrice,Quantity,Avatar,Status,Description")] Product product)
         {
             if (ModelState.IsValid)
             {
