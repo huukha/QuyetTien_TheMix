@@ -76,13 +76,13 @@ namespace quyettien.Areas.admin.Controllers
         public JsonResult ThemChiTiet(List<InstallmentBillDetail> installmentBillDetails)
         {
             int billID = installmentBillDetails[0].BillID;
-            db.CashBillDetails.RemoveRange(db.CashBillDetails.Where(cbd => cbd.BillID == billID));
+            db.InstallmentBillDetails.RemoveRange(db.InstallmentBillDetails.Where(ibd => ibd.BillID == billID));
             foreach (InstallmentBillDetail ibd in installmentBillDetails)
             {
                 db.InstallmentBillDetails.Add(ibd);
             }
             db.SaveChanges();
-            return Json(true);
+            return Json(billID, JsonRequestBehavior.AllowGet);
         }
 
         // GET: InstallmentPrice
@@ -119,17 +119,47 @@ namespace quyettien.Areas.admin.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Sua([Bind(Include = "ID,BillCode,CustomerID,Date,Shipper,Note,Method,Period,GrandTotal,Taken,Remain")] InstallmentBill installmentBill)
+        //[ValidateAntiForgeryToken]
+        public JsonResult Sua([Bind(Include = "ID,BillCode,CustomerID,Date,Shipper,Note,Method,Period,GrandTotal,Taken,Remain")] InstallmentBill installmentBill)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(installmentBill).State = EntityState.Modified;
+                db.InstallmentBills.Attach(installmentBill);
+                db.Entry(installmentBill).Property(ib => ib.Method).IsModified = true;
+                db.Entry(installmentBill).Property(ib => ib.Period).IsModified = true;
+                db.Entry(installmentBill).Property(ib => ib.Shipper).IsModified = true;
+                db.Entry(installmentBill).Property(ib => ib.Note).IsModified = true;
+                db.Entry(installmentBill).Property(ib => ib.GrandTotal).IsModified = true;
+                db.Entry(installmentBill).Property(ib => ib.Taken).IsModified = true;
+                db.Entry(installmentBill).Property(ib => ib.Remain).IsModified = true;
+
+                //db.Entry(installmentBill).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                //return Json("Cập nhật thành công");
+
+                int BillID = installmentBill.ID;
+                return Json(new { billID = BillID }, JsonRequestBehavior.AllowGet);
             }
-            ViewBag.CustomerID = new SelectList(db.Customers, "ID", "CustomerName", installmentBill.CustomerID);
-            return View(installmentBill);
+            else
+            {
+                var modelState = ModelState.ToDictionary
+                (
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+
+                );
+                return Json(new { modelState = modelState }, JsonRequestBehavior.AllowGet);
+            }
+            //return View(installmentBill);
+        }
+
+
+        public JsonResult ChiTietHoaDon(int id)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var list = db.InstallmentBillDetails.Where(ibd => ibd.BillID == id).ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         //// GET: admin/TraGop/Xoa/5

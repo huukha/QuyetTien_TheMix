@@ -203,22 +203,19 @@
         });
 
         // Xử lý khi nhập tiền đưa trước
-        tienConLai();
+
+        $("#Taken").keyup(function () {
+            tienConLai();
+        })
+
         function tienConLai() {
-            $("#Taken").keyup(function () {
-                var total = $("#GrandTotal").val();
-                var taken = $(this).val();
-
-                $("#Remain").val(total - taken);
-            })
-
             var total = $("#GrandTotal").val();
             var taken = $("#Taken").val();
             $("#Remain").val(total - taken);
         }
 
 
-        var row_id = 2;
+        var row_id = 31;
         // Thêm sản phẩm
         $("#add-product").click(function () {
             var count = $("#product-list tr").length;
@@ -226,7 +223,7 @@
                 var row = '';
                 row += '<tr>';
                 row += '<td>' + dropDownProductList() + '</td>';
-                row += '<td><span class="price"></span><input type="hidden" name="SalePrice" class="price-input"></td>';
+                row += '<td><span class="price"></span><input type="hidden" name="InstallmentPrice" class="price-input"></td>';
                 row += '<td>' + selectQuantity() + '</td>';
                 row += '<td class="money"></td>';
                 row += '<td><button type="button" class="btn btn-outline-danger btn-rounded btn-sm waves-effect delete-product"><i class="mdi mdi-close-circle-outline"></i></button></td>';
