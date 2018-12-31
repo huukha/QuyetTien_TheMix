@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Admin\SanPham.cs" />
     <Compile Include="Admin\DanhMuc.cs" />
+    <Compile Include="Admin\KhachHang.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
