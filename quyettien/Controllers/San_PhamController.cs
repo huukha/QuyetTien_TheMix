@@ -76,6 +76,14 @@ namespace quyettien.Controllers
         }
 
 
+        // GET: SanPhamMoi
+        public ActionResult SanPhamBanChay()
+        {
+            var featureProduct = db.CashBillDetails.Where(p => p.Product.Status == true).OrderByDescending(p => p.Quantity).Take(5);
+            return PartialView(featureProduct);
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
