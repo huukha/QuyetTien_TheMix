@@ -48,5 +48,31 @@ namespace quyettien.Tests.Admin
             var result = controller.Them(model) as RedirectToRouteResult;
             Assert.IsNotNull(result);
         }
+
+
+        [TestMethod]
+        public void TestSuaKhachHang1()
+        {
+            var controller = new KhachHangController();
+            var db = new DIENMAYQUYETTIENEntities();
+            var model = new Customer();
+            var firstID = db.Customers.First().ID;
+            var result = controller.Sua(firstID) as RedirectToRouteResult;
+            Assert.AreEqual("0773322489", db.Customers.First().PhoneNumber);
+
+        }
+        [TestMethod]
+        public void TestSuaKhachHang2()
+        {
+            var controller = new KhachHangController();
+            var db = new DIENMAYQUYETTIENEntities();
+            var model = db.Customers.AsNoTracking().First();
+
+
+            model.PhoneNumber = "0773322489";
+
+            var result0 = controller.Sua(model) as RedirectToRouteResult;
+            Assert.IsNotNull(result0);
+        }
     }
 }
