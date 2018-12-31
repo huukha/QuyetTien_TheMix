@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using quyettien.Areas.admin.Controllers;
@@ -43,6 +44,27 @@ namespace quyettien.Tests.Admin
             var result = controller.Sua(firstID) as ViewResult;
             Assert.IsInstanceOfType(result.ViewData["ProductTypeID"], typeof(SelectList));
             Assert.AreEqual("Điện thoại iPhone X", db.Products.First().ProductName);
+        }
+
+        [TestMethod]
+        public void TestXoaSanPham()
+        {
+            var controller = new SanPhamController();
+            var db = new DIENMAYQUYETTIENEntities();
+            var model = db.Products.AsNoTracking().First();
+            var firstID = db.Products.OrderByDescending(x => x.ID).First().ID;
+
+
+            int count = db.Products.Count();
+            using (var scope = new TransactionScope())
+            {
+
+                var result0 = controller.DeleteConfirmed(firstID) as RedirectToRouteResult;
+                Assert.IsNotNull(result0);
+                Assert.AreEqual("Index", result0.RouteValues["action"]);
+                Assert.AreEqual(count - 1, db.Products.Count());
+
+            }
         }
     }
 }
