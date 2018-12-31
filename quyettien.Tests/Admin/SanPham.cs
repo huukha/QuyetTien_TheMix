@@ -32,5 +32,17 @@ namespace quyettien.Tests.Admin
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result.ViewData["ProductTypeID"], typeof(SelectList));
         }
+
+        [TestMethod]
+        public void TestSuaSanPham()
+        {
+            var controller = new SanPhamController();
+            var db = new DIENMAYQUYETTIENEntities();
+            var model = new Product();
+            var firstID = db.Products.First().ID;
+            var result = controller.Sua(firstID) as ViewResult;
+            Assert.IsInstanceOfType(result.ViewData["ProductTypeID"], typeof(SelectList));
+            Assert.AreEqual("Điện thoại iPhone X", db.Products.First().ProductName);
+        }
     }
 }
