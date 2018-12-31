@@ -21,5 +21,16 @@ namespace quyettien.Tests.Admin
             Assert.IsInstanceOfType(result.Model, typeof(List<Product>));
             Assert.AreEqual(db.Products.Count(), ((List<Product>)result.Model).Count);
         }
+
+
+        [TestMethod]
+        public void TestThemSanPham1()
+        {
+            var controller = new SanPhamController();
+            var result = controller.Them() as ViewResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result.ViewData["ProductTypeID"], typeof(SelectList));
+        }
     }
 }
