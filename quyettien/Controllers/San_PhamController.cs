@@ -31,10 +31,10 @@ namespace quyettien.Controllers
             }
             else
             {
-                var products = db.Products.Include(p => p.ProductType).Where(p => p.Status == true && p.ProductTypeID == id);
+                var products = db.Products.Include(p => p.ProductType).Where(p => p.Status == true && p.ProductTypeID == id).ToList();
 
                 ViewBag.ProductTypeID = new SelectList(db.ProductTypes, "ID", "ProductTypeName");
-                return View(products.ToList());
+                return View(products);
             }
         }
 
