@@ -71,7 +71,7 @@ namespace quyettien.Controllers
         // GET: SanPhamMoi
         public ActionResult SanPhamMoi()
         {
-            var newProduct = db.Products.Where(p => p.Status == true).ToList().Take(5);
+            var newProduct = db.Products.Where(p => p.Status == true).OrderByDescending(p => p.ID).ToList().Take(5);
             return PartialView(newProduct);
         }
 
