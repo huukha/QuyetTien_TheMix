@@ -46,6 +46,19 @@ namespace quyettien.Tests.Admin
             var result = controller.Them(model) as RedirectToRouteResult;
             Assert.IsNotNull(result);
         }
+
+
+        [TestMethod]
+        public void TestGiaoDienSuaDanhMuc()
+        {
+            var controller = new DanhMucController();
+            var db = new DIENMAYQUYETTIENEntities();
+            var model = new ProductType();
+            var firstID = db.ProductTypes.First().ID;
+            var result = controller.Sua(firstID) as RedirectToRouteResult;
+            Assert.AreEqual("DTH", db.ProductTypes.First().ProductTypeCode);
+
+        }
     }
 
 }
