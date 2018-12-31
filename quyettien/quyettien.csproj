@@ -167,6 +167,7 @@
     <Compile Include="Areas\admin\Controllers\TraGopController.cs" />
     <Compile Include="Controllers\Gioi_ThieuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Lien_HeController.cs" />
     <Compile Include="Controllers\San_PhamController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -3767,6 +3768,7 @@
     <Content Include="Views\San_Pham\MenuDanhMuc.cshtml" />
     <Content Include="Views\San_Pham\SanPhamMoi.cshtml" />
     <Content Include="Views\San_Pham\SanPhamBanChay.cshtml" />
+    <Content Include="Views\Lien_He\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
