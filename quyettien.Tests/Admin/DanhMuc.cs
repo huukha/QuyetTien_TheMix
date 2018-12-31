@@ -22,5 +22,30 @@ namespace quyettien.Tests.Admin
             Assert.IsInstanceOfType(result.Model, typeof(List<ProductType>));
 
         }
+
+
+        [TestMethod]
+        public void TestThemDanhMuc1()
+        {
+            var controller = new DanhMucController();
+            var result = controller.Them() as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+        [TestMethod]
+        public void TestThemDanhMuc2()
+        {
+            var controller = new DanhMucController();
+            var db = new DIENMAYQUYETTIENEntities();
+            var model = new ProductType();
+
+            model.ProductTypeCode = "MLT";
+            model.ProductTypeName = "Máy Laptop";
+
+
+            var result = controller.Them(model) as RedirectToRouteResult;
+            Assert.IsNotNull(result);
+        }
     }
+
 }
