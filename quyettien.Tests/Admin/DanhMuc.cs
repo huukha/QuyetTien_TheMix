@@ -74,6 +74,27 @@ namespace quyettien.Tests.Admin
             var result0 = controller.Sua(model) as RedirectToRouteResult;
             Assert.IsNotNull(result0);
         }
+
+
+        [TestMethod]
+        public void XoaDanhMuc()
+        {
+            var controller = new DanhMucController();
+            var db = new DIENMAYQUYETTIENEntities();
+            var model = db.ProductTypes.AsNoTracking().First();
+            var firstID = db.ProductTypes.OrderByDescending(x => x.ID).First().ID;
+
+            int count = db.ProductTypes.Count();
+            using (var scope = new TransactionScope())
+            {
+
+                var result0 = controller.DeleteConfirmed(firstID) as RedirectToRouteResult;
+                Assert.IsNotNull(result0);
+                Assert.AreEqual("Index", result0.RouteValues["action"]);
+                Assert.AreEqual(count - 1, db.ProductTypes.Count());
+
+            }
+        }
     }
 
 }
