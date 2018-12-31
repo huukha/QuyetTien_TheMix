@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quyettien", "quyettien\quyettien.csproj", "{5FE5D8FE-6190-41CD-B96D-E31A23C8250D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quyettien.Tests", "quyettien.Tests\quyettien.Tests.csproj", "{F902FEA7-D781-402E-890D-E8ECD7DE3F80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5FE5D8FE-6190-41CD-B96D-E31A23C8250D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FE5D8FE-6190-41CD-B96D-E31A23C8250D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FE5D8FE-6190-41CD-B96D-E31A23C8250D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F902FEA7-D781-402E-890D-E8ECD7DE3F80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F902FEA7-D781-402E-890D-E8ECD7DE3F80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F902FEA7-D781-402E-890D-E8ECD7DE3F80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F902FEA7-D781-402E-890D-E8ECD7DE3F80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
