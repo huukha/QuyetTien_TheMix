@@ -1,31 +1,201 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Trang Chủ";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<!-- Slide1 -->
+<section class="slide1">
+    <div class="wrap-slick1">
+        <div class="slick1">
+            <div class="item-slick1 item1-slick1" style="background-image: url(images/master-slide-02.jpg);">
+                <div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
+                    <span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="fadeInDown">
+                        Women Collection 2018
+                    </span>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+                    <h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="fadeInUp">
+                        New arrivals
+                    </h2>
+
+                    <div class="wrap-btn-slide1 w-size1 animated visible-false" data-appear="zoomIn">
+                        <!-- Button -->
+                        <a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
+                            Shop Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item-slick1 item2-slick1" style="background-image: url(images/master-slide-03.jpg);">
+                <div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
+                    <span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rollIn">
+                        Women Collection 2018
+                    </span>
+
+                    <h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="lightSpeedIn">
+                        New arrivals
+                    </h2>
+
+                    <div class="wrap-btn-slide1 w-size1 animated visible-false" data-appear="slideInUp">
+                        <!-- Button -->
+                        <a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
+                            Shop Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item-slick1 item3-slick1" style="background-image: url(images/master-slide-04.jpg);">
+                <div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
+                    <span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rotateInDownLeft">
+                        Women Collection 2018
+                    </span>
+
+                    <h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="rotateInUpRight">
+                        New arrivals
+                    </h2>
+
+                    <div class="wrap-btn-slide1 w-size1 animated visible-false" data-appear="rotateIn">
+                        <!-- Button -->
+                        <a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
+                            Shop Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+</section>
+
+<!-- New Product -->
+<section class="newproduct bgwhite p-t-45 p-b-105">
+    <div class="container">
+        <div class="sec-title p-b-60">
+            <h3 class="m-text5 t-center">
+                Sản phẩm mới
+            </h3>
+        </div>
+
+        <!-- Sản phẩm mới -->
+        @Html.Action("SanPhamMoi", "San_Pham")
+
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+</section>
+
+
+<!-- Blog -->
+<section class="blog bgwhite p-t-94 p-b-65">
+    <div class="container">
+        <div class="sec-title p-b-52">
+            <h3 class="m-text5 t-center">
+                Tin tức mới
+            </h3>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-10 col-md-4 p-b-30 m-l-r-auto">
+                <!-- Block3 -->
+                <div class="block3">
+                    <a href="blog-detail.html" class="block3-img dis-block hov-img-zoom">
+                        <img src="images/blog-01.jpg" alt="IMG-BLOG">
+                    </a>
+
+                    <div class="block3-txt p-t-14">
+                        <h4 class="p-b-7">
+                            <a href="blog-detail.html" class="m-text11">
+                                Black Friday Guide: Best Sales & Discount Codes
+                            </a>
+                        </h4>
+
+                        <span class="s-text6">By</span> <span class="s-text7">Nancy Ward</span>
+                        <span class="s-text6">on</span> <span class="s-text7">July 22, 2017</span>
+
+                        <p class="s-text8 p-t-16">
+                            Duis ut velit gravida nibh bibendum commodo. Sus-pendisse pellentesque mattis augue id euismod. Inter-dum et malesuada fames
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-10 col-md-4 p-b-30 m-l-r-auto">
+                <!-- Block3 -->
+                <div class="block3">
+                    <a href="blog-detail.html" class="block3-img dis-block hov-img-zoom">
+                        <img src="images/blog-02.jpg" alt="IMG-BLOG">
+                    </a>
+
+                    <div class="block3-txt p-t-14">
+                        <h4 class="p-b-7">
+                            <a href="blog-detail.html" class="m-text11">
+                                The White Sneakers Nearly Every Fashion Girls Own
+                            </a>
+                        </h4>
+
+                        <span class="s-text6">By</span> <span class="s-text7">Nancy Ward</span>
+                        <span class="s-text6">on</span> <span class="s-text7">July 18, 2017</span>
+
+                        <p class="s-text8 p-t-16">
+                            Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit ame
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-10 col-md-4 p-b-30 m-l-r-auto">
+                <!-- Block3 -->
+                <div class="block3">
+                    <a href="blog-detail.html" class="block3-img dis-block hov-img-zoom">
+                        <img src="images/blog-03.jpg" alt="IMG-BLOG">
+                    </a>
+
+                    <div class="block3-txt p-t-14">
+                        <h4 class="p-b-7">
+                            <a href="blog-detail.html" class="m-text11">
+                                New York SS 2018 Street Style: Annina Mislin
+                            </a>
+                        </h4>
+
+                        <span class="s-text6">By</span> <span class="s-text7">Nancy Ward</span>
+                        <span class="s-text6">on</span> <span class="s-text7">July 2, 2017</span>
+
+                        <p class="s-text8 p-t-16">
+                            Proin nec vehicula lorem, a efficitur ex. Nam vehicula nulla vel erat tincidunt, sed hendrerit ligula porttitor. Fusce sit amet maximus nunc
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>
+
+<!-- Shipping -->
+<section class="shipping bgwhite p-t-62 p-b-46">
+    <div class="flex-w p-l-15 p-r-15">
+        <div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
+            <h4 class="m-text12 t-center">
+                Miễn phí vận chuyển toàn quốc
+            </h4>
+
+        </div>
+
+        <div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 bo2 respon2">
+            <h4 class="m-text12 t-center">
+                30 ngày hoàn trả
+            </h4>
+
+            <span class="s-text11 t-center">
+
+            </span>
+        </div>
+
+        <div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
+            <h4 class="m-text12 t-center">
+                Thời gian mở cửa
+            </h4>
+
+            <span class="s-text11 t-center">
+                Từ thứ Hai đến Chủ nhật
+            </span>
+        </div>
+    </div>
+</section>

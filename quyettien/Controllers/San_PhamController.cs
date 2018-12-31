@@ -15,12 +15,27 @@ namespace quyettien.Controllers
         private DIENMAYQUYETTIENEntities db = new DIENMAYQUYETTIENEntities();
 
         // GET: San_Pham
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var products = db.Products.Include(p => p.ProductType).Where(p => p.Status == true);
+            //var products = db.Products.Include(p => p.ProductType).Where(p => p.Status == true);
 
-            ViewBag.ProductTypeID = new SelectList(db.ProductTypes, "ID", "ProductTypeName");
-            return View(products.ToList());
+            //ViewBag.ProductTypeID = new SelectList(db.ProductTypes, "ID", "ProductTypeName");
+            //return View(products.ToList());
+
+            if (id == 0 || id == null)
+            {
+                var products = db.Products.Include(p => p.ProductType).Where(p => p.Status == true);
+
+                ViewBag.ProductTypeID = new SelectList(db.ProductTypes, "ID", "ProductTypeName");
+                return View(products.ToList());
+            }
+            else
+            {
+                var products = db.Products.Include(p => p.ProductType).Where(p => p.Status == true && p.ProductTypeID == id);
+
+                ViewBag.ProductTypeID = new SelectList(db.ProductTypes, "ID", "ProductTypeName");
+                return View(products.ToList());
+            }
         }
 
         // Get Image
@@ -44,6 +59,20 @@ namespace quyettien.Controllers
                 return HttpNotFound();
             }
             return View(product);
+        }
+
+        // GET: DanhMuc
+        public ActionResult MenuDanhMuc()
+        {
+            var categories = db.ProductTypes.ToList();
+            return PartialView(categories);
+        }
+
+        // GET: SanPhamMoi
+        public ActionResult SanPhamMoi()
+        {
+            var newProduct = db.Products.Where(p => p.Status == true).ToList().Take(5);
+            return PartialView(newProduct);
         }
 
 

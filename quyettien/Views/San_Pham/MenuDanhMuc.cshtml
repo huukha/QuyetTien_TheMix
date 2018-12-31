@@ -1,0 +1,10 @@
+﻿@model IEnumerable<quyettien.Models.ProductType>
+
+@foreach (var item in Model)
+{
+    <li class="p-t-4">
+        <a href="@Url.Action("Index", "San_Pham", new { id = item.ID })" class="s-text13">
+            @item.ProductTypeName
+        </a>
+    </li>
+}

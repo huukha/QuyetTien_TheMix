@@ -25,7 +25,7 @@ namespace quyettien.Models
 
         [Required(ErrorMessage = "Vui lòng nhập mã danh mục")]
         [RegularExpression(@"^[a-zA-Z]{1,40}$", ErrorMessage = "Chỉ được sử dụng kí tự chữ không dấu và không có khoảng trắng")]
-        [StringLength(3, MinimumLength = 3, ErrorMessage = "Tên danh mục là chuỗi có 3 kí tự")]
+        [StringLength(3, MinimumLength = 3, ErrorMessage = "Mã danh mục là chuỗi có 3 kí tự")]
         public string ProductTypeCode { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập tên danh mục")]

@@ -3764,6 +3764,8 @@
     <Content Include="Views\San_Pham\Chi_Tiet.cshtml" />
     <Content Include="Views\San_Pham\Index.cshtml" />
     <Content Include="Views\Gioi_Thieu\Index.cshtml" />
+    <Content Include="Views\San_Pham\MenuDanhMuc.cshtml" />
+    <Content Include="Views\San_Pham\SanPhamMoi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
